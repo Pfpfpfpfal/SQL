@@ -1,0 +1,117 @@
+CREATE TABLE airports 
+(
+  id int PRIMARY KEY,
+  name varchar(30) not null
+)
+insert INTO airports
+VALUES
+(1111, 'sishka'),
+(2222, 'borozh'),
+(3333, 'loo'),
+(4444, 'ikea')
+
+CREATE table commander
+(
+  id int PRIMARY KEY,
+  name varchar(60) not null,
+  exp int NOT null,
+  age int not NULL
+)
+INSERT into commander
+VALUES
+(1,'CA name',10, 35),
+(2,'CB name',12, 40),
+(3,'CC name',5, 28),
+(4,'CD name',10, 37)
+
+CREATE table tickets
+(
+  id int PRIMARY KEY,
+  seat int NOT NULL,
+  price int NOT NULL,
+  depid int REFERENCES departure(id)
+)
+INSERT INTO tickets
+VALUES
+(143, 23, 1000, 44),
+(156, 45, 650, 90),
+(555, 36, 650, 56),
+(867, 66, 500, 7),
+(908, 46, 1000, 44)
+
+CREATE TABLE baggage
+(
+  weight int not null,
+  pasid int REFERENCES passangers(id)
+)
+insert into baggage
+values
+(3,	1),
+(1,	2),
+(4,	3),
+(4	,4),
+(10	5)
+
+
+CREATE table passangers
+(
+  id int PRIMARY KEY,
+  name varchar(60) not null,
+  doc int not null,
+  ticketid int REFERENCES tickets(id)
+)
+INSERT into passangers
+VALUES
+(1,	'Aname',	6789,	143),
+(2,	'Bname',	4312,	156),
+(3,	'Cname',	4678,	555),
+(4,	'Dname',	9403,	867),
+(5,	'Iname',	7004,	908)
+
+CREATE table planes
+(
+  id int PRIMARY key,
+  type varchar(20) not null,
+  seats int not null,
+  rabge int not null,
+  com int REFERENCES commander(id)
+)
+INSERT into planes
+VALUES
+(1,	'boing',	100,	4000,	1),
+(2,	'plane',	20,	500,	2),
+(3,	'boing',	100	,4000,	3),
+(4,	'boing',	100	,4000,	4)
+
+CREATE table flights
+(
+  id int PRIMARY KEY,
+  num int not null,
+  airdepart int REFERENCES airports(id),
+  airarriv int REFERENCES airports(id),
+  flytime int not null,
+  ticketid int REFERENCES tickets(id)
+)
+INSERT into flights
+VALUES
+(456,	11,	1111,	3333,	10	,143),
+(789	,23,	2222,	1111,	13,	156),
+(100,	12,	4444,	2222,	5,	555),
+(87	,44,	3333,	4444,	7,	867),
+(455	,11,	1111,	3333,	10,	908)
+
+CREATE table departure
+(
+  id PRIMARY KEY,
+  flight int REFERENCES flights(id),
+  deptime int not null,
+  plane int REFERENCES planes(id),
+  ticketid int REFERENCES tickets(id)
+)
+INSERT into departure
+VALUES
+(44,	456,	8.00,	1,	143),
+(90,	789,	17.00,	2,	156),
+(56	,87,	18.00,	3,	555),
+(7,	100	,10.00,	4,	867),
+(45,	455,	8.00,	1,	908)
